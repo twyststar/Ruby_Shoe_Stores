@@ -2,9 +2,11 @@ class Shoe < ActiveRecord::Base
   has_and_belongs_to_many :stores
 
   validates_uniqueness_of :name
-  validates :name, presence: true
+  validates :name, {:presence => true, :length => { :maximum => 100 }}
   validates :cost, presence: true
   validates :description, presence: true
+
+
 
   before_destroy :kill_all
   before_save :make_money
