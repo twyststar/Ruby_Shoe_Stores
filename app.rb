@@ -59,6 +59,18 @@ patch '/store/:id/shoe' do
   redirect ('/store/' + params[:id])
 end
 
+patch '/store/name/:id' do
+  store = Store.find(params[:id])
+  store.update({:name => params[:name]})
+  redirect ('/store/' + params[:id])
+end
+
+patch '/store/desc/:id' do
+  store = Store.find(params[:id])
+  store.update({:description => params[:desc]})
+  redirect ('/store/' + params[:id])
+end
+
 delete '/store/edit/:id/shoe' do
   store = Store.find(params[:id])
   shoe_ids = params[:shoe_ids]
