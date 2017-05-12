@@ -2,52 +2,55 @@
   <h1><%= @store.name %></h1>
   <h4><%= @store.description %></h4>
 </div>
-<div class="col-xs-4">
-  <h3>Shoes carried by <%= @store.name %></h3>
-  <%if @store.shoes.any?%>
-      <p>Click on any shoe to view/edit.</p>
-      <% @store.shoes.each() do |shoe|%>
-        <a href="/shoe/<%= shoe.id %>"><%= shoe.name() %></a>
-        <br>
+<div class="row">
+  <div class="col-xs-4">
+    <h3>Shoes carried by <%= @store.name %></h3>
+    <%if @store.shoes.any?%>
+        <p>Click on any shoe to view/edit.</p>
+        <% @store.shoes.each() do |shoe|%>
+          <a href="/shoe/<%= shoe.id %>"><%= shoe.name() %></a>
+          <br>
+        <% end %>
+      <% else %>
+        <h3><%= @store.name %> does not have any of our shoes yet.</h3>
       <% end %>
-    <% else %>
-      <h3><%= @store.name %> does not have any of our shoes yet.</h3>
+  </div>
+  <div class="col-xs-4">
+    <h3>Add shoes to <%= @store.name %>:</h3>
+    <p>Our shoes not currently sold here:</p>
+    <% if @store.not_shoes.any? == false %>
+      <p>We don't have any brands that are not being sold here.</p>
     <% end %>
+    <form action="/store/<%= @store.id()%>/shoe" method="post">
+          <input type="hidden" name="_method" value="patch">
+          <div class="input-group">
+            <% @store.not_shoes.each() do |shoe| %>
+              <div class="checkbox">
+                <input type="checkbox" name="shoe_ids[]" aria-label="..." value="<%= shoe.id() %>">&nbsp;&nbsp;<%= shoe.name() %>
+                <p id="<%= shoe.id() %>"></p>
+              </div>
+            <% end %>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Add shoes</button>
+        </form>
+  </div>
+  <div class="col-xs-4">
+    <h3>Remove shoes from <%= @store.name %>:</h3>
+    <form action="/store/edit/<%= @store.id() %>/shoe" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <div class="input-group">
+        <% @store.shoes.each() do |shoe| %>
+          <input type="checkbox" name="shoe_ids[]" aria-label="..." value="<%= shoe.id() %>"><%= shoe.name() %>
+          <br>
+        <% end %>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Remove</button>
+    </form>
+  </div>
 </div>
-<div class="col-xs-4">
-  <h3>Add shoes to <%= @store.name %>:</h3>
-  <p>Our shoes not currently sold here:</p>
-  <% if @store.not_shoes.any? == false %>
-    <p>We don't have any brands that are not being sold here.</p>
-  <% end %>
-  <form action="/store/<%= @store.id()%>/shoe" method="post">
-        <input type="hidden" name="_method" value="patch">
-        <div class="input-group">
-          <% @store.not_shoes.each() do |shoe| %>
-            <div class="checkbox">
-              <input type="checkbox" name="shoe_ids[]" aria-label="..." value="<%= shoe.id() %>">&nbsp;&nbsp;<%= shoe.name() %>
-              <p id="<%= shoe.id() %>"></p>
-            </div>
-          <% end %>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Add shoes</button>
-      </form>
-</div>
-<div class="col-xs-4">
-  <h3>Remove shoes from <%= @store.name %>:</h3>
-  <form action="/store/edit/<%= @store.id() %>/shoe" method="post">
-    <input type="hidden" name="_method" value="delete">
-    <div class="input-group">
-      <% @store.shoes.each() do |shoe| %>
-        <input type="checkbox" name="shoe_ids[]" aria-label="..." value="<%= shoe.id() %>"><%= shoe.name() %>
-        <br>
-      <% end %>
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Remove</button>
-  </form>
-</div>
+
 <a href="/">Main page</a>
 <div class="row well">
   <h2>Edit store:</h2>
