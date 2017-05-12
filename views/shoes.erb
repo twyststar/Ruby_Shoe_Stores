@@ -1,0 +1,34 @@
+<h1>Stores Home</h1>
+<div class="col-xs-4">
+  <%if @shoes.any?%>
+      <h3>All Shoes:</h3>
+      <p>Click on any shoe to view/edit.</p>
+      <% @shoes.each() do |shoe|%>
+        <a href="/shoe/<%= shoe.id %>"><%= shoe.name() %></a>
+        <br>
+      <% end %>
+    <% else %>
+      <h3>You don't have any shoes yet!</h3>
+    <% end %>
+</div>
+
+<div class="col-xs-8">
+  <h4>Add a shoe</h4>
+  <form action="/shoe" method="post">
+    <div class="form_group">
+      <label for="name">Shoe Name:</label>
+      <br>
+      <input type="text" name="name">
+      <br>
+      <label for="cost">Shoe Price:</label>
+      <br>
+      <input type="number" name="cost">
+      <br>
+      <label for="desc">Shoe Description:</label>
+      <textarea class="form-control" name="desc" rows="3"></textarea>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-block">Add Shoe</button>
+  </form>
+</div>
+<a href="/">Main page</a>
