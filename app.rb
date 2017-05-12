@@ -58,3 +58,13 @@ patch '/store/:id/shoe' do
   end
   redirect ('/store/' + params[:id])
 end
+
+delete '/store/edit/:id/shoe' do
+  store = Store.find(params[:id])
+  shoe_ids = params[:shoe_ids]
+  shoe_ids.each() do |id|
+    shoe = Shoe.find(id)
+    store.shoes.destroy(shoe)
+  end
+  redirect ('/store/' + params[:id])
+end
