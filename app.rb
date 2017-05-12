@@ -68,3 +68,9 @@ delete '/store/edit/:id/shoe' do
   end
   redirect ('/store/' + params[:id])
 end
+
+delete '/store/delete/:id' do
+  store = Store.find(params[:id])
+  store.destroy
+  redirect '/stores'
+end

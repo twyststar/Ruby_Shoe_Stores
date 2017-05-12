@@ -51,4 +51,18 @@
 <a href="/">Main page</a>
 <div class="row well">
   <h2>Edit store:</h2>
+  <div class="col-xs-4 well">
+    <h4>Edit store name:</h4>
+  </div>
+  <div class="col-xs-4 well">
+    <h4>Edit store description:</h4>
+  </div>
+  <div class="col-xs-4 well">
+    <h4>Delete store:</h4>
+    <p>!Warning this will remove all records!</p>
+    <form action="/store/delete/<%= @store.id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-danger btn-lg">Delete Store</button>
+      </form>
+  </div>
 </div>
