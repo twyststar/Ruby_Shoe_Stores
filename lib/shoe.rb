@@ -50,17 +50,15 @@ private
     self.stores.delete_all
   end
 
-  def cap_name
-    name = self.name.split
-      name.each do |word|
-        word.capitalize!
-      end
-    name = name.join(' ')
-    self.name = name
-  end
-
   def make_money
-    self.cost = "$"+"%.2f" % cost
+    now = self.cost.split("")
+    if now[0] == "$"
+    now.shift
+    end
+    if now.length > 1
+      now.join("")
+    end
+    self.cost = "$"+"%.2f" % now
   end
 
 end

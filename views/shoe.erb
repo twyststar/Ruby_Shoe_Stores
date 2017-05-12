@@ -32,7 +32,6 @@
           <button type="submit" class="btn btn-primary">Add <%= @shoe.name %> to stores</button>
         </form>
   </div>
-  <a href="/">Main page</a>
 </div>
 <div class="row well">
   <h2>Edit <%=@shoe.name%>:</h2>
@@ -41,6 +40,7 @@
     <h4>Edit shoe name:</h4>
     <form action="/shoe/name/<%= @shoe.id %>" method="post">
        <input type="hidden" name="_method" value="patch">
+       <input type="hidden" name="cost" value="<%= @shoe.cost %>">
        <div class="form_group">
          <input type="text" name="name">
        </div>
