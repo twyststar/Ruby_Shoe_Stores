@@ -6,6 +6,12 @@ class Store < ActiveRecord::Base
   validates_uniqueness_of :name
   validates :name, {:presence => true, :length => { :maximum => 100 }}
   validates :description, presence: true
+  validates :name, :exclusion => { :in => %w(lout),
+    :message => ": The word %{value} offends the owner." }
+  validates :name, :exclusion => { :in => %w(curmudgeon),
+    :message => ": The word %{value} offends the owner." }
+  validates :name, :exclusion => { :in => %w(clodhopper),
+    :message => ": The word %{value} offends the owner." }
 
   def not_shoes
     all_shoes = Shoe.all()
@@ -14,6 +20,7 @@ class Store < ActiveRecord::Base
   end
 
 private
+
 def title_case
   ignores = ['is', 'of', 'to', 'the', 'a', 'or', 'at', 'an', 'it', 'and']
   split_sentence = self.name.split

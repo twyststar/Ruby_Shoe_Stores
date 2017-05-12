@@ -5,8 +5,12 @@ class Shoe < ActiveRecord::Base
   validates :name, {:presence => true, :length => { :maximum => 100 }}
   validates :cost, presence: true
   validates :description, presence: true
-
-
+  validates :name, :exclusion => { :in => %w(lout),
+    :message => ": The word %{value} offends the owner." }
+  validates :name, :exclusion => { :in => %w(curmudgeon),
+    :message => ": The word %{value} offends the owner." }
+  validates :name, :exclusion => { :in => %w(clodhopper),
+    :message => ": The word %{value} offends the owner." }
 
   before_destroy :kill_all
   before_save :make_money
