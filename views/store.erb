@@ -16,7 +16,7 @@
 </div>
 <div class="col-xs-6">
   <h3>Add shoes to <%= @store.name %>:</h3>
-  <form action="/store/<%= @store.id()%>/store" method="post">
+  <form action="/store/<%= @store.id()%>/shoe" method="post">
         <input type="hidden" name="_method" value="patch">
         <div class="input-group">
           <% @store.not_shoes.each() do |shoe| %>
@@ -27,6 +27,7 @@
           <% end %>
         </div>
         <br>
-        <button type="submit" class="btn btn-primary">Add shoes to <%= store</button>
+        <button type="submit" class="btn btn-primary">Add shoes</button>
       </form>
 </div>
+<a href="/">Main page</a>

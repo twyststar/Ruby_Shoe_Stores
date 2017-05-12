@@ -49,3 +49,12 @@ get '/store/:id' do
   @store = Store.find(params[:id])
   erb :store
 end
+
+patch '/store/:id/shoe' do
+  store = Store.find(params[:id])
+  shoe_ids = params[:shoe_ids]
+  shoe_ids.each do |id|
+    store.shoes.push(Shoe.find(id))
+  end
+  redirect ('/store/' + params[:id])
+end
