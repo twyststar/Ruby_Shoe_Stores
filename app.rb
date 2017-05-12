@@ -14,9 +14,12 @@ get '/shoes' do
 end
 
 post '/shoe' do
-  shoe = Shoe.new({:name => params[:name], :cost => params[:cost], :description => params[:desc]})
-  shoe.save
-  redirect '/shoes'
+  @shoe = Shoe.new({:name => params[:name], :cost => params[:cost], :description => params[:desc]})
+  if @shoe.save
+   redirect '/stores'
+ else
+   erb :error_shoe
+ end
 end
 
 get '/shoe/:id' do
@@ -40,9 +43,12 @@ get '/stores' do
 end
 
 post '/store' do
-  store = Store.new({:name => params[:name], :description => params[:desc]})
-  store.save
-  redirect '/stores'
+  @store = Store.new({:name => params[:name], :description => params[:desc]})
+   if @store.save
+    redirect '/stores'
+  else
+    erb :error_store
+  end
 end
 
 get '/store/:id' do
