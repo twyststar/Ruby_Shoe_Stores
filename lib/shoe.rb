@@ -10,7 +10,7 @@ class Shoe < ActiveRecord::Base
 
   before_destroy :kill_all
   before_save :make_money
-  before_save :cap_name
+  before_save :title_case
 
   def not_stores
     all_stores = Store.all()
@@ -19,6 +19,18 @@ class Shoe < ActiveRecord::Base
   end
 
 private
+
+  def title_case
+    ignores = ['is', 'of', 'to', 'the', 'a', 'or', 'at', 'an', 'it', 'and']
+    split_sentence = self.name.split
+    split_sentence[0].capitalize!()
+    split_sentence.each do |word|
+      if ignores.include?(word) == false
+      word.capitalize!()
+      end
+    end
+    self.name = split_sentence.join(" ")
+  end
 
   def kill_all
     self.stores.delete_all

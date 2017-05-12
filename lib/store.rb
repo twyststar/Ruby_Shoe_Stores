@@ -1,6 +1,6 @@
 class Store < ActiveRecord::Base
   has_and_belongs_to_many :shoes
-  before_save :cap_name
+  before_save :title_case
   before_destroy :kill_all
 
   validates_uniqueness_of :name
@@ -14,7 +14,17 @@ class Store < ActiveRecord::Base
   end
 
 private
-
+def title_case
+  ignores = ['is', 'of', 'to', 'the', 'a', 'or', 'at', 'an', 'it', 'and']
+  split_sentence = self.name.split
+  split_sentence[0].capitalize!()
+  split_sentence.each do |word|
+    if ignores.include?(word) == false
+    word.capitalize!()
+    end
+  end
+  self.name = split_sentence.join(" ")
+end
   def cap_name
     name = self.name.split
       name.each do |word|
