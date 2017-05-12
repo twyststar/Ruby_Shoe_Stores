@@ -36,6 +36,12 @@ patch '/shoe/:id/store' do
   redirect ('/shoe/' + params[:id])
 end
 
+delete '/shoe/delete/:id' do
+  shoe = Shoe.find(params[:id])
+  shoe.destroy
+  redirect '/shoes'
+end
+
 
 get '/stores' do
   @stores = Store.all()

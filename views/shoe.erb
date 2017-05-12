@@ -3,32 +3,68 @@
   <h3><%= @shoe.cost %></h3>
   <h4><%= @shoe.description %></h4>
 </div>
-<div class="col-xs-6">
-  <h3>Stores carrying <%= @shoe.name %></h3>
-  <%if @shoe.stores.any?%>
-      <p>Click on any store to view/edit.</p>
-      <% @shoe.stores.each() do |store|%>
-        <a href="/store/<%= store.id %>"><%= store.name() %></a>
-        <br>
+<div class="row">
+  <div class="col-xs-6">
+    <h3>Stores carrying <%= @shoe.name %></h3>
+    <%if @shoe.stores.any?%>
+        <p>Click on any store to view/edit.</p>
+        <% @shoe.stores.each() do |store|%>
+          <a href="/store/<%= store.id %>"><%= store.name() %></a>
+          <br>
+        <% end %>
+      <% else %>
+        <h3><%= @shoe.name %> is not in any stores yet.</h3>
       <% end %>
-    <% else %>
-      <h3><%= @shoe.name %> is not in any stores yet.</h3>
-    <% end %>
+  </div>
+  <div class="col-xs-6">
+    <h3>Add <%= @shoe.name %> to store(s):</h3>
+    <form action="/shoe/<%= @shoe.id() %>/store" method="post">
+          <input type="hidden" name="_method" value="patch">
+          <div class="input-group">
+            <% @shoe.not_stores.each() do |store| %>
+              <div class="checkbox">
+                <input type="checkbox" name="store_ids[]" aria-label="..." value="<%= store.id() %>">&nbsp;&nbsp;<%= store.name() %>
+                <p id="<%= store.id() %>"></p>
+              </div>
+            <% end %>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Add <%= @shoe.name %> to stores</button>
+        </form>
+  </div>
+  <a href="/">Main page</a>
 </div>
-<div class="col-xs-6">
-  <h3>Add <%= @shoe.name %> to store(s):</h3>
-  <form action="/shoe/<%= @shoe.id() %>/store" method="post">
-        <input type="hidden" name="_method" value="patch">
-        <div class="input-group">
-          <% @shoe.not_stores.each() do |store| %>
-            <div class="checkbox">
-              <input type="checkbox" name="store_ids[]" aria-label="..." value="<%= store.id() %>">&nbsp;&nbsp;<%= store.name() %>
-              <p id="<%= store.id() %>"></p>
-            </div>
-          <% end %>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary">Add <%= @shoe.name %> to stores</button>
+<div class="row well">
+  <h2>Edit <%=@shoe.name%>:</h2>
+
+  <div class="col-xs-4 well">
+    <h4>Edit shoe name:</h4>
+    <form action="/shoe/name/<%= @shoe.id %>" method="post">
+       <input type="hidden" name="_method" value="patch">
+       <div class="form_group">
+         <input type="text" name="name">
+       </div>
+       <button type="submit" class="btn btn-primary">Update Name</button>
+     </form>
+  </div>
+
+  <div class="col-xs-4 well">
+    <h4>Edit shoe description:</h4>
+    <form class="" action="/shoe/desc/<%= @shoe.id %>" method="post">
+       <input type="hidden" name="_method" value="patch">
+      <div class="form_group">
+        <textarea class="form-control" name="desc" rows="3"></textarea>
+      </div>
+       <button type="submit" class="btn btn-primary">Update Description</button>
+    </form>
+  </div>
+
+  <div class="col-xs-4 well">
+    <h4>Delete shoe:</h4>
+    <p>!Warning this will remove all records!</p>
+    <form action="/shoe/delete/<%= @shoe.id %>" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button type="submit" class="btn btn-danger btn-lg">Delete Shoe</button>
       </form>
+  </div>
 </div>
-<a href="/">Main page</a>
