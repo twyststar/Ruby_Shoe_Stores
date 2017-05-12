@@ -15,6 +15,7 @@ class Shoe < ActiveRecord::Base
   before_destroy :kill_all
   before_save :make_money
   before_save :title_case
+  before_save :cap_desc
 
   def not_stores
     all_stores = Store.all()
@@ -35,6 +36,15 @@ private
     end
     self.name = split_sentence.join(" ")
   end
+
+  def cap_desc
+    desc = self.description.split('. ')
+    desc.each do |part|
+      part.capitalize!
+    end
+    self.description = desc.join('. ')
+  end
+
 
   def kill_all
     self.stores.delete_all

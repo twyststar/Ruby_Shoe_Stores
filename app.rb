@@ -16,7 +16,7 @@ end
 post '/shoe' do
   @shoe = Shoe.new({:name => params[:name], :cost => params[:cost], :description => params[:desc]})
   if @shoe.save
-   redirect '/stores'
+   redirect '/shoes'
  else
    erb :error_shoe
  end
