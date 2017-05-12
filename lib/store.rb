@@ -21,26 +21,18 @@ class Store < ActiveRecord::Base
 
 private
 
-def title_case
-  ignores = ['is', 'of', 'to', 'the', 'a', 'or', 'at', 'an', 'it', 'and']
-  split_sentence = self.name.split
-  split_sentence[0].capitalize!()
-  split_sentence.each do |word|
-    if ignores.include?(word) == false
-    word.capitalize!()
-    end
-  end
-  self.name = split_sentence.join(" ")
-end
-  def cap_name
-    name = self.name.split
-      name.each do |word|
-        word.capitalize!
+  def title_case
+    ignores = ['is', 'of', 'to', 'the', 'a', 'or', 'at', 'an', 'it', 'and']
+    split_sentence = self.name.split
+    split_sentence[0].capitalize!()
+    split_sentence.each do |word|
+      if ignores.include?(word) == false
+      word.capitalize!()
       end
-    name = name.join(' ')
-    self.name = name
+    end
+    self.name = split_sentence.join(" ")
   end
-
+  
   def kill_all
     self.shoes.delete_all
   end

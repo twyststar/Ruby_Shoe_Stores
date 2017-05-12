@@ -56,7 +56,7 @@ private
     now.shift
     end
     if now.length > 1
-      now.join("")
+     now = now.join()
     end
     self.cost = "$"+"%.2f" % now
   end

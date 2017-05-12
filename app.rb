@@ -38,7 +38,19 @@ end
 
 patch '/shoe/name/:id' do
   @shoe = Shoe.find(params[:id])
-  @shoe.update({:name => params[:name], :cost => params[:cost]})
+  @shoe.update({:name => params[:name]})
+  redirect ('/shoe/' + params[:id])
+end
+
+patch '/shoe/cost/:id' do
+  @shoe = Shoe.find(params[:id])
+  @shoe.update({:cost => params[:cost]})
+  redirect ('/shoe/' + params[:id])
+end
+
+patch '/shoe/desc/:id' do
+  shoe = Shoe.find(params[:id])
+  shoe.update({:description => params[:desc]})
   redirect ('/shoe/' + params[:id])
 end
 
