@@ -1,0 +1,33 @@
+<div class="well">
+  <h1><%= @shoe.name %></h1>
+  <h3><%= @shoe.cost %></h3>
+  <h4><%= @shoe.description %></h4>
+</div>
+<div class="col-xs-6">
+  <h3>Stores carrying <%= @shoe.name %></h3>
+  <%if @shoe.stores.any?%>
+      <p>Click on any store to view/edit.</p>
+      <% @shoe.stores.each() do |store|%>
+        <a href="/store/<%= store.id %>"><%= store.name() %></a>
+        <br>
+      <% end %>
+    <% else %>
+      <h3><%= @shoe.name %> is not in any stores yet.</h3>
+    <% end %>
+</div>
+<div class="col-xs-6">
+  <h3>Add <%= @shoe.name %> to store(s):</h3>
+  <form action="/shoe/<%= @shoe.id() %>/store" method="post">
+        <input type="hidden" name="_method" value="patch">
+        <div class="input-group">
+          <% @shoe.not_stores.each() do |store| %>
+            <div class="checkbox">
+              <input type="checkbox" name="store_ids[]" aria-label="..." value="<%= store.id() %>">&nbsp;&nbsp;<%= store.name() %>
+              <p id="<%= store.id() %>"></p>
+            </div>
+          <% end %>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add <%= @shoe.name %> to stores</button>
+      </form>
+</div>

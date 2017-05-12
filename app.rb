@@ -19,6 +19,21 @@ post '/shoe' do
   redirect '/shoes'
 end
 
+get '/shoe/:id' do
+  @shoe = Shoe.find(params[:id])
+  erb :shoe
+end
+
+patch '/shoe/:id/store' do
+  shoe = Shoe.find(params[:id])
+  store_ids = params[:store_ids]
+  store_ids.each do |id|
+    shoe.stores.push(Store.find(id))
+  end
+  redirect ('/shoe/' + params[:id])
+end
+
+
 get '/stores' do
   @stores = Store.all()
   erb :stores
@@ -28,4 +43,9 @@ post '/store' do
   store = Store.new({:name => params[:name], :description => params[:desc]})
   store.save
   redirect '/stores'
+end
+
+get '/store/:id' do
+  @store = Store.find(params[:id])
+  erb :store
 end
