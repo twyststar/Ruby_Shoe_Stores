@@ -1,5 +1,10 @@
 require('spec_helper')
 describe(Store) do
+  it("validates uniquness of name regardless of case") do
+    shoe1 = Shoe.create({:name => "the one", :description => "best shoe", :cost => "12"})
+    shoe2 = Shoe.new({:name => "the One", :description => "best shoe", :cost => "12"})
+    expect(shoe2.save()).to(eq(false))
+  end
   it("formats cost to money string") do
     shoe1 = Shoe.new({:name => "the one", :description => "best shoe", :cost => "12"})
     shoe1.save

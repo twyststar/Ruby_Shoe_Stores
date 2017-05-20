@@ -1,9 +1,7 @@
 class Store < ActiveRecord::Base
   has_and_belongs_to_many :shoes
-  before_save :title_case
-  before_destroy :kill_all
 
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :case_sensitive => false
   validates :name, {:presence => true, :length => { :maximum => 100 }}
   validates :description, presence: true
   validates :name, :exclusion => { :in => %w(lout),
@@ -12,6 +10,11 @@ class Store < ActiveRecord::Base
     :message => ": The word %{value} offends the owner." }
   validates :name, :exclusion => { :in => %w(clodhopper),
     :message => ": The word %{value} offends the owner." }
+
+  before_save :title_case
+  before_save :cap_desc
+  before_destroy :kill_all
+
 
   def not_shoes
     all_shoes = Shoe.all()
@@ -32,7 +35,15 @@ private
     end
     self.name = split_sentence.join(" ")
   end
-  
+
+  def cap_desc
+    desc = self.description.split('. ')
+    desc.each do |part|
+      part.capitalize!
+    end
+    self.description = desc.join('. ')
+  end
+
   def kill_all
     self.shoes.delete_all
   end

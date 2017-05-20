@@ -1,7 +1,7 @@
 class Shoe < ActiveRecord::Base
   has_and_belongs_to_many :stores
 
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :case_sensitive => false
   validates :name, {:presence => true, :length => { :maximum => 100 }}
   validates :cost, presence: true
   validates :description, presence: true
@@ -24,7 +24,6 @@ class Shoe < ActiveRecord::Base
   end
 
 private
-
   def title_case
     ignores = ['is', 'of', 'to', 'the', 'a', 'or', 'at', 'an', 'it', 'and']
     split_sentence = self.name.split
